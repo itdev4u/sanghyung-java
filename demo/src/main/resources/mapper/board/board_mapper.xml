@@ -11,4 +11,45 @@
 			, MOD_DTM
 		FROM PYCODING.BOARD
 	</select>
+	
+	<insert id="createPosts" parameterType="java.util.HashMap">
+		INSERT INTO BOARD (
+			TITLE
+			, CONTENT
+			, REG_USER
+			, REG_DTM
+			, MOD_USER
+			, MOD_DTM
+		) VALUES (
+			#{title}
+			, #{content}
+			, 'lunajin'
+			, NOW()
+			, 'lunajin'
+			, NOW()
+		)
+	</insert>
+	
+	<select id="detailPost" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT TITLE
+			, CONTENT
+			, REG_USER
+			, DATE_FORMAT(REG_DTM, '%Y-%m-%d %H:%i:%s') AS REG_DTM
+		FROM BOARD
+		WHERE UUID = #{uuid}
+	</select>
+	
+	<delete id="deletePost" parameterType="java.util.HashMap">
+		DELETE FROM BOARD
+		WHERE UUID = #{uuid}
+	</delete>
+	
+	<update id="updatePost" parameterType="java.util.HashMap">
+		UPDATE BOARD
+		   SET TITLE = #{title}
+		     , CONTENT = #{content}
+		     , MOD_USER = 'lunajin'
+		     , MOD_DTM = NOW()
+		WHERE UUID = #{uuid}
+	</update>
 </mapper>

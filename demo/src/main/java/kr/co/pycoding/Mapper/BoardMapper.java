@@ -12,4 +12,12 @@ public interface BoardMapper {
 
 	List<Map<String, Object>> getPosts(Map<String, String> params);
 
+	int createPosts(Map<String, String> params);
+
+	Map<String, Object> detailPost(Map<String, Object> params);
+
+	int deletePost(Map<String, Object> params);
+
+	int updatePost(Map<String, String> params);
+
 }
