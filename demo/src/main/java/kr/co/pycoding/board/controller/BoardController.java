@@ -27,6 +27,8 @@ public class BoardController {
 	public ResponseEntity<?> getPosts(@RequestBody Map<String, String> params) {
 		//return ResponseEntity.ok().body(memberService.login(param));
 		System.out.println("getPosts START : " + params.toString());
+		int offSet = (Integer.parseInt(params.get("_page")) -1) * Integer.parseInt(params.get("_limit"));
+		params.put("offSet", String.valueOf(offSet));
 		Map<String, Object> rtnMap = boardService.getPosts(params);
 		return new ResponseEntity<Map<String, Object>>(rtnMap, HttpStatus.OK);
 	}

@@ -17,9 +17,11 @@ public class BoardService {
 	public Map<String, Object> getPosts(Map<String, String> params) {
 		// TODO Auto-generated method stub
 		List<Map<String, Object>> boardList = boardMapper.getPosts(params);
+		int totalCount = boardMapper.getTotalCount(params);
 		
 		Map<String, Object> response = new HashMap<String, Object>();
 		response.put("boardList", boardList);
+		response.put("totalCount", totalCount);
 		return response;
 	}
 

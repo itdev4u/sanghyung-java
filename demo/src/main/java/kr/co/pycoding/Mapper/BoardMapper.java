@@ -20,4 +20,6 @@ public interface BoardMapper {
 
 	int updatePost(Map<String, String> params);
 
+	int getTotalCount(Map<String, String> params);
+
 }

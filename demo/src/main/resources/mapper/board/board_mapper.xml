@@ -2,14 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.pycoding.Mapper.BoardMapper">
 	<select id="getPosts" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT UUID
-			, TITLE
-			, CONTENT
-			, REG_USER
-			, REG_DTM
-			, MOD_USER
-			, MOD_DTM
-		FROM PYCODING.BOARD
+		SELECT T1.UUID
+			, T1.TITLE
+			, T1.CONTENT
+			, T1.REG_USER
+			, T2.USER_NM
+			, T1.REG_DTM
+			, T1.MOD_USER
+			, T1.MOD_DTM
+		FROM PYCODING.BOARD T1
+		LEFT OUTER JOIN PYCODING.MEMBER T2
+		  ON T1.REG_USER = T2.ID
+		<where>
+			<if test="title_like != null or title_like != ''">
+			AND T1.TITLE LIKE CONCAT('%', #{title_like}, '%')
+			</if>
+		</where>
+		ORDER BY UUID DESC
+		LIMIT ${_limit} OFFSET ${offSet}
+	</select>
+	
+	<select id="getTotalCount" parameterType="java.util.HashMap" resultType="int">
+		SELECT COUNT(*)
+		FROM PYCODING.BOARD T1
+		LEFT OUTER JOIN PYCODING.MEMBER T2
+		  ON T1.REG_USER = T2.ID
+		<where>
+			<if test="title_like != null or title_like != ''">
+			AND T1.TITLE LIKE CONCAT('%', #{title_like}, '%')
+			</if>
+		</where>		
 	</select>
 	
 	<insert id="createPosts" parameterType="java.util.HashMap">
